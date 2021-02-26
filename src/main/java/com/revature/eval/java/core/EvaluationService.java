@@ -37,28 +37,41 @@ public class EvaluationService {
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
 		
-		//find substrings and create String array
-		String[] phrase1 = phrase.split(" "); //output should be ["Portable", "Network", "Graphics"]
+//		//find substrings and create String array
+//		String[] phrase1 = phrase.split(" "); //output should be ["Portable", "Network", "Graphics"]
+//		
+//		//creating new result array
+//		String[] result = new String[phrase1.length];
+//		
+//		String resultString = "";
+//		
+//		//loop through and obtain char at 0 for each index in phrase1, store these values in result array
+//		for(int i = 0; i < phrase1.length; i++) {
+//			char c = phrase1[i].charAt(0);
+//			resultString = String.valueOf(c);
+//			return resultString;
+//		}
 		
-		//creating new result array
-		String[] result = new String[phrase1.length];
 		
-		String resultString = "";
+		String output = "";
+		output += phrase.charAt(0);
 		
-		//loop through and obtain char at 0 for each index in phrase1, store these values in result array
-		for(int i = 0; i < phrase1.length; i++) {
-			char c = phrase1[i].charAt(0);
-			//System.out.println(c);
-			//result = String.valueOf(c);
-			resultString = String.valueOf(c);
-//			System.out.println(resultString);
-		}
+		for (int i = 1; i < phrase.length(); i++) {
+			if (Character.isWhitespace(phrase.charAt(i))) {
+				output = output + phrase.charAt(i);
+				output += phrase.charAt(i+1);
+			}
+ 		}
 		
-		//convert from array to string, print the resultString value
-//		String resultString = String.valueOf(c);
-		System.out.println(resultString);	//should I include this line?
+		/*for (int i = 1; i < input.length(); i++) {
+			if (Character.isUpperCase(input.charAt(i))) {
+				output += input.charAt(i);
+			}
+		}*/
+		return output.replaceAll("\\s+","").toUpperCase();
 		
-		return null;
+		
+//		return null;
 	}
 
 	/**
@@ -300,7 +313,7 @@ public class EvaluationService {
 	 * of word definitions. Given a word, one can find its definition. A telephone
 	 * book is a sorted list of people's names, addresses, and telephone numbers.
 	 * Knowing someone's name allows one to quickly find their telephone number and
-	 * address.
+	 * address. 
 	 * 
 	 * If the list to be searched contains more than a few items (a dozen, say) a
 	 * binary search will require far fewer comparisons than a linear search, but it
