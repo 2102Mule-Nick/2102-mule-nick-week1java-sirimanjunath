@@ -1,8 +1,13 @@
 package com.revature.eval.java.core;
 
+import java.time.temporal.ChronoUnit;
 import java.time.temporal.Temporal;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class EvaluationService {
 
@@ -31,6 +36,28 @@ public class EvaluationService {
 	 */
 	public String acronym(String phrase) {
 		// TODO Write an implementation for this method declaration
+		
+		//find substrings and create String array
+		String[] phrase1 = phrase.split(" "); //output should be ["Portable", "Network", "Graphics"]
+		
+		//creating new result array
+		String[] result = new String[phrase1.length];
+		
+		String resultString = "";
+		
+		//loop through and obtain char at 0 for each index in phrase1, store these values in result array
+		for(int i = 0; i < phrase1.length; i++) {
+			char c = phrase1[i].charAt(0);
+			//System.out.println(c);
+			//result = String.valueOf(c);
+			resultString = String.valueOf(c);
+//			System.out.println(resultString);
+		}
+		
+		//convert from array to string, print the resultString value
+//		String resultString = String.valueOf(c);
+		System.out.println(resultString);	//should I include this line?
+		
 		return null;
 	}
 
@@ -85,16 +112,27 @@ public class EvaluationService {
 
 		public boolean isEquilateral() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne == sideTwo && sideTwo == sideThree && sideOne == sideThree) {
+				return true;
+			}
+			
 			return false;
 		}
 
 		public boolean isIsosceles() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne==sideTwo || sideTwo == sideThree || sideOne == sideThree) {
+				return true;
+			}
+			
 			return false;
 		}
 
 		public boolean isScalene() {
 			// TODO Write an implementation for this method declaration
+			if(sideOne != sideTwo && sideTwo != sideThree && sideOne != sideThree) {
+				return true;
+			}
 			return false;
 		}
 
@@ -117,6 +155,39 @@ public class EvaluationService {
 	 */
 	public int getScrabbleScore(String string) {
 		// TODO Write an implementation for this method declaration
+		Map<Character, Integer> mapLetters = new HashMap<>();
+		mapLetters.put('A', 1);
+		mapLetters.put('E',  1);
+		mapLetters.put('I',  1);
+		mapLetters.put('O',  1);
+		mapLetters.put('U',  1);
+		mapLetters.put('L',  1);
+		mapLetters.put('N',  1);
+		mapLetters.put('R',  1);
+		mapLetters.put('S',  1);
+		mapLetters.put('T',  1);
+		mapLetters.put('D',  2);
+		mapLetters.put('G',  2);
+		mapLetters.put('B',  3);
+		mapLetters.put('C',  3);
+		mapLetters.put('M',  3);
+		mapLetters.put('P',  3);
+		mapLetters.put('F',  4);
+		mapLetters.put('H',  4);
+		mapLetters.put('V',  4);
+		mapLetters.put('W',  4);
+		mapLetters.put('Y',  4);
+		mapLetters.put('K', 5);
+		mapLetters.put('J', 8);
+		mapLetters.put('X', 8);
+		mapLetters.put('Q', 10);
+		mapLetters.put('Z', 10);
+		
+		int score = 0;
+		for (int i = 0; i < string.length(); i++) {
+			score += mapLetters.get(string.charAt(i));
+		}
+		
 		return 0;
 	}
 
@@ -153,6 +224,33 @@ public class EvaluationService {
 	 */
 	public String cleanPhoneNumber(String string) {
 		// TODO Write an implementation for this method declaration
+		
+		if(string.contains(" ")) {
+			String[] numberWithSpaces = string.split(" "); 
+			// will contain ["1", "613", "995", "0253"]
+			// or contains ["613", "995", "0253"]
+			if(numberWithSpaces.length == 10) {
+				String firsttwo = numberWithSpaces[1].concat(numberWithSpaces[2]);
+				String complete = firsttwo.concat(numberWithSpaces[3]);
+				return complete;
+			}
+			if(numberWithSpaces.length == 9) {
+				String firsttwo = numberWithSpaces[0].concat(numberWithSpaces[1]);
+				String complete = firsttwo.concat(numberWithSpaces[2]);
+				return complete;
+			}
+		}
+		
+		if(string.charAt(0) == '+' || string.charAt(1) == '1') {
+			
+		}
+		
+		
+		// if the string has spaces
+			// split the string and put into array --> there should be 3 or 4 arrays
+			// concatenate the arrays
+		
+		
 		return null;
 	}
 
@@ -167,11 +265,36 @@ public class EvaluationService {
 	 */
 	public Map<String, Integer> wordCount(String string) {
 		// TODO Write an implementation for this method declaration
+		
+//		String[] myString = string.split(" ");
+//		
+//		int count = 0;
+//		for (int i = 0; i < myString.length; i++) {
+//			if ()
+//		}
+		
+		//Split the string to put the words in an array
+		String [] arrayOfWords = string.split(" ");
+		
+		HashMap<String, Integer> phraseMap = new HashMap<String, Integer>();
+		// for each word in the list.
+		for(String word:arrayOfWords) {
+			// Get it's current count from the Map.
+			Integer i = phraseMap.get(word);
+			if (i == null) {
+				// Null means it has not been seen before so count is 1.
+				phraseMap.put(word, 1);
+			} else {
+				// we have seen this word before so add one to count.
+				phraseMap.put(word, i+1);
+			}
+		}
+		 
 		return null;
 	}
 
 	/**
-	 * 7. Implement a binary search algorithm.
+	 * 7. Implement a binary search algorithm. //come back to this!!
 	 * 
 	 * Searching a sorted collection is a common task. A dictionary is a sorted list
 	 * of word definitions. Given a word, one can find its definition. A telephone
@@ -210,6 +333,20 @@ public class EvaluationService {
 
 		public int indexOf(T t) {
 			// TODO Write an implementation for this method declaration
+			
+			int left = 0;
+			int right = sortedList.size();
+			int mid = left + (right - 1)/2;
+			
+			//is x present at mid?
+			if (sortedList.get(mid) == t) {
+				return mid;
+			}
+			
+//			if (sortedList.get(mid) <= t) {
+//				return mid;
+//			}
+			
 			return 0;
 		}
 
@@ -247,6 +384,23 @@ public class EvaluationService {
 	 */
 	public String toPigLatin(String string) {
 		// TODO Write an implementation for this method declaration
+		
+		
+		String sound = "ay";
+		
+		int x = string.length();
+		if(string.charAt(0) == 'a' || string.charAt(0) =='e' || string.charAt(0) =='i' || string.charAt(0) == 'o' || string.charAt(0) == 'u') {
+			string = string + sound;
+			return string;
+		}
+		if(string.charAt(0) != 'a' || string.charAt(0) !='e' || string.charAt(0) !='i' || string.charAt(0) != 'o' || string.charAt(0) != 'u') {
+			String body = string.substring(1, string.length());
+			char consonant = string.charAt(0);
+			string = body + consonant + sound;
+			return string;
+		} 
+		
+		
 		return null;
 	}
 
@@ -267,6 +421,20 @@ public class EvaluationService {
 	 */
 	public boolean isArmstrongNumber(int input) {
 		// TODO Write an implementation for this method declaration
+		
+		int a = 0;
+		int b;
+		int temp = input;
+		
+		while(input>0) {
+			b = input %10;
+			input = input/10;
+			a = a+(b*b*b);
+		}
+		if (temp == a) {
+			return true;
+		}
+		
 		return false;
 	}
 
@@ -282,7 +450,28 @@ public class EvaluationService {
 	 */
 	public List<Long> calculatePrimeFactorsOf(long l) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		ArrayList<Long> result = new ArrayList<Long>();
+		
+		while(l % 2 == 0) {
+			result.add(l);
+            l /= 2; 
+		}
+		
+		for (int i = 3; i <= Math.sqrt(l); i+= 2) 
+        { 
+            while (l%i == 0) 
+            { 
+                result.add(l);
+                l /= i; 
+            } 
+        } 
+  
+        if (l > 2) 
+            result.add(l);
+		
+		return result;
+//		return null;
 	}
 
 	/**
@@ -340,7 +529,26 @@ public class EvaluationService {
 	 */
 	public int calculateNthPrime(int i) {
 		// TODO Write an implementation for this method declaration
-		return 0;
+		
+		int num, count, x;
+		num=1;
+	    count=0;
+	 
+	    while (count < i){
+	      num=num+1;
+	      for (x = 2; x <= num; x++){ //Here we will loop from 2 to num
+	        if (num % x == 0) {
+	          break;
+	        }
+	      }
+	      if ( x == num){//if it is a prime number
+	        count = count+1;
+	      }
+	    }
+	    System.out.println("Value of nth prime: " + num);
+	  
+		
+		return num;
 	}
 
 	/**
@@ -434,7 +642,41 @@ public class EvaluationService {
 	 */
 	public boolean isPangram(String string) {
 		// TODO Write an implementation for this method declaration
-		return false;
+		
+		boolean[] mark = new boolean[26]; 
+		  
+        // For indexing in mark[] 
+        int index = 0; 
+  
+        // Traverse all characters 
+        for (int i = 0; i < string.length(); i++) { 
+            // If uppercase character, subtract 'A' 
+            // to find index. 
+            if ('A' <= string.charAt(i) && string.charAt(i) <= 'Z') 
+                index = string.charAt(i) - 'A'; 
+  
+            // If lowercase character, subtract 'a' 
+            // to find index. 
+            else if ('a' <= string.charAt(i) && string.charAt(i) <= 'z') 
+  
+                index = string.charAt(i) - 'a'; 
+  
+            // If this character is other than english 
+            // lowercase and uppercase characters. 
+            else
+                continue; 
+            mark[index] = true; 
+        } 
+  
+        // Return false if any character is unmarked 
+        for (int i = 0; i <= 25; i++) 
+            if (mark[i] == false) 
+                return (false); 
+  
+        // If all characters were present 
+        return (true); 
+		
+//		return false;
 	}
 
 	/**
@@ -447,7 +689,11 @@ public class EvaluationService {
 	 */
 	public Temporal getGigasecondDate(Temporal given) {
 		// TODO Write an implementation for this method declaration
-		return null;
+		
+		int seconds = 1000000000;
+		return given.plus(seconds, ChronoUnit.SECONDS);
+		
+//		return null;
 	}
 
 	/**
@@ -538,6 +784,39 @@ public class EvaluationService {
 	 */
 	public int solveWordProblem(String string) {
 		// TODO Write an implementation for this method declaration
+		
+		int result = 0;
+		String[] words = string.split(" "); // ["What", "is", "1", "plus", "1"]
+//		String number1 = words[2];
+//		System.out.println("question 20, number1: " + number1);
+//		int num1 = Integer.parseInt(number1);
+//		System.out.println("question 20: " + num1);
+		
+//		System.out.println("words[3]: " + words[3]);
+		
+		if(words[3].equals("plus")) {
+			System.out.println("Q20 debug 1");
+			result = Integer.parseInt(words[2]) + Integer.parseInt(words[4]); 
+//			System.out.println("result question 20: " + result);
+			return result;
+		}
+		
+		if(words[3].equals("minus")) {
+			System.out.println("Q20 debug 2");
+			return result = Integer.parseInt(words[2]) - Integer.parseInt(words[4]);
+		}
+		
+		if(words[3].equals("multiplied")) {
+//			System.out.println("Q20 debug 3");
+			return result = Integer.parseInt(words[2]) * Integer.parseInt(words[5]);
+		}
+		
+		if(words[3].equals("divided")) {
+			System.out.println("Q20 debug 4");
+			return result = Integer.parseInt(words[2]) + Integer.parseInt(words[5]);
+		}
+		
+		
 		return 0;
 	}
 
