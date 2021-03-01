@@ -523,9 +523,32 @@ public class EvaluationService {
 
 		public String rotate(String string) {
 			// TODO Write an implementation for this method declaration
-			return null;
+			
+			//int s;
+			
+			StringBuffer result= new StringBuffer(); 
+			
+			  
+	        for (int i=0; i<string.length(); i++) 
+	        { 
+	            if (Character.isUpperCase(string.charAt(i))) 
+	            { 
+	                char ch = (char)(((int)string.charAt(i) + key - 65) % 26 + 65); 
+	                                  
+	                result.append(ch); 
+	            } 
+	            else
+	            { 
+	                char ch = (char)(((int)string.charAt(i) + key - 97) % 26 + 97);
+	                                   
+	                result.append(ch); 
+	                
+	            } 
+			
 		}
-
+	       return result.toString();
+	}
+		
 	}
 
 	/**
@@ -834,3 +857,4 @@ public class EvaluationService {
 	}
 
 }
+
